@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="38X6Dg3CynPrftxadtkodY">
+<head data-page-node-id="scZAcbnQwk5liCfIHDmRn5">
+<meta charset="UTF-8" data-page-node-id="VqGlZyBpkWFTOn6dA7XpLr">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="Trdp1Qb6pBzbFCp2ZkOk5j">
+<title>DJF-Image effects 效果说明书</title>
+<style>
+  :root{
+    --ink:#1f2430; --sub:#5b6472; --line:#e4e7ec; --accent:#ff5a3c;
+    --card:#fff; --bg:#f6f7f9;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.6;}
+  .wrap{max-width:1080px;margin:0 auto;padding:40px 24px 80px;}
+  header{border-bottom:3px solid var(--accent);padding-bottom:20px;margin-bottom:8px;}
+  header h1{margin:0;font-size:30px;letter-spacing:.5px;}
+  header .tag{display:inline-block;background:var(--accent);color:#fff;font-size:13px;
+    padding:3px 10px;border-radius:20px;margin-top:10px;}
+  header p{color:var(--sub);margin:10px 0 0;font-size:14px;}
+  .orig{margin:28px 0 10px;}
+  .orig h2{font-size:18px;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+  .orig h2::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent);}
+  .orig figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:12px;
+    padding:16px;display:flex;justify-content:center;}
+  .orig img{max-width:340px;width:100%;height:auto;display:block;
+    image-rendering:auto;background:
+      linear-gradient(45deg,#eee 25%,transparent 25%,transparent 75%,#eee 75%),
+      linear-gradient(45deg,#eee 25%,#fff 25%,#fff 75%,#eee 75%);
+    background-size:18px 18px;background-position:0 0,9px 9px;}
+  .orig figcaption{color:var(--sub);font-size:13px;margin-top:10px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:22px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+    display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s;}
+  .card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.08);}
+  .card .thumb{background:#fff;padding:10px;display:flex;justify-content:center;
+    border-bottom:1px solid var(--line);min-height:200px;align-items:center;}
+  .card .thumb img{width:100%;max-height:200px;object-fit:contain;
+    background:
+      linear-gradient(45deg,#eee 25%,transparent 25%,transparent 75%,#eee 75%),
+      linear-gradient(45deg,#eee 25%,#fff 25%,#fff 75%,#eee 75%);
+    background-size:18px 18px;background-position:0 0,9px 9px;}
+  .card .meta{padding:12px 14px 14px;}
+  .card .no{font-size:12px;color:var(--accent);font-weight:700;letter-spacing:1px;}
+  .card .cn{font-size:17px;font-weight:700;margin:2px 0 2px;}
+  .card .en{font-size:12px;color:var(--sub);font-family:ui-monospace,Menlo,Consolas,monospace;}
+  .card .desc{font-size:12.5px;color:#444;margin-top:8px;}
+  footer{margin-top:40px;border-top:1px solid var(--line);padding-top:18px;
+    color:var(--sub);font-size:13px;}
+  footer code{background:#eceff3;padding:2px 6px;border-radius:5px;font-size:12px;}
+  @media print{.card:hover{transform:none;box-shadow:none;}.wrap{padding:12px;}}
+</style>
+</head>
+<body data-page-node-id="HgGFsZpXaxOALbDXCRUdIt">
+<div class="wrap" data-page-node-id="PJh5ypbUW7ONRsb9nnMg3W">
+  <header data-page-node-id="bWgv0HqM3u1bAMe2B5ofGH">
+    <h1 data-page-node-id="9I2fHCeylTTmM6Z6PPXPgW">DJF-Image effects · 效果说明书</h1>
+    <span class="tag" data-page-node-id="Uu5lG0wnN2TQUhZMGN3GPW">透明底主体 → 15 种 Illustrator 风格特效</span>
+    <p data-page-node-id="hdX1pscoOjucqEjXGetJT0">纯代码直出（Pillow + NumPy），不消耗 AI 生图、无水印、参数可复现。所有效果默认保留透明底，可直接叠入拼贴。</p>
+  </header>
+
+  <section class="orig" data-page-node-id="vRydbUC4s7ciew8YSkU6CO">
+    <h2 data-page-node-id="JipRF60FWa4p4fknjkGbVo">原图（主体样本）</h2>
+    <figure data-page-node-id="ESgnZrmM0vqYOzhNaxVcbz">
+      <img src="../assets/examples/00-原图.png" alt="原图" data-page-node-id="aVGHB1TUjuyI1wdTrKgtLG">
+    </figure>
+    <figcaption data-page-node-id="RjyiKaDf90ocHCnMwnBf0T">示例主体：透明底 PNG（打电话的橘猫）。下文 15 种效果均以此图为样本生成。</figcaption>
+  </section>
+
+  <section class="grid" data-page-node-id="np0gafX3DO95ar41PdAuJf">
+    <div class="card" data-page-node-id="kByNIgTBMVRDJEezuI5llz"><div class="thumb" data-page-node-id="jY7nvekq1xnk9eM4XGsA5D"><img src="../assets/examples/01-彩色半调.png" alt="彩色半调" data-page-node-id="pC4PavJ3M3lGXlEau52S4f"></div>
+      <div class="meta" data-page-node-id="GjWQmqzkAf6gz2VXzsvqQQ"><div class="no" data-page-node-id="PPalaABXEWeDBGJy9txGpQ">01</div><div class="cn" data-page-node-id="IgJjiOIIyZ67fTJe1Ggi8m">彩色半调</div><div class="en" data-page-node-id="VzXYz2Q82bV6BoU3vODvRD">halftone</div>
+        <div class="desc" data-page-node-id="0DrrmPZLiBaIxeGV9N8oad">RGB 三色网点按传统网角叠加，肉眼重混出原色，保留透明底。</div></div></div>
+
+    <div class="card" data-page-node-id="KQEdCwMNAdtCrwd3xxo8VE"><div class="thumb" data-page-node-id="9HvcoP4dtmHZfeTtV7ak4c"><img src="../assets/examples/02-栅格化.png" alt="栅格化" data-page-node-id="H8ozFDIkROHdKAkiswWYyI"></div>
+      <div class="meta" data-page-node-id="eCf1tWCNea9JRdWnCL1Sri"><div class="no" data-page-node-id="hWQebM9JYPzIqrGvAbUGru">02</div><div class="cn" data-page-node-id="C1C3YGqO3Czie7TGI3aE0j">栅格化</div><div class="en" data-page-node-id="28JO9DzRdo2r6qZlvcagVY">raster</div>
+        <div class="desc" data-page-node-id="abO8cYWzRdIaiXCC9YgKtP">对齐网格 + 单色墨点，整张图被规整网格重新采样。</div></div></div>
+
+    <div class="card" data-page-node-id="bFLoRZAuwgCwarSD8HlG2U"><div class="thumb" data-page-node-id="6WaqQVzmGCKGF9m38R8ow0"><img src="../assets/examples/03-铜版雕刻.png" alt="铜版雕刻" data-page-node-id="Rp6MXaBksB1YYHddrgcJC6"></div>
+      <div class="meta" data-page-node-id="dexDpIExMs1R4uJJrAIRnc"><div class="no" data-page-node-id="seEhUNvFz9gTW7ykb9qGfY">03</div><div class="cn" data-page-node-id="OH4A1zDcxFM9UiXUmOGlpY">铜版雕刻</div><div class="en" data-page-node-id="LGTMTd4SEAty2iP9pTRhCL">mezzotint</div>
+        <div class="desc" data-page-node-id="cMRkim1Wi8tOMTB6mXt2rU">随机方向刻线形成金属雕版质感，明暗由刻线密度表现。</div></div></div>
+
+    <div class="card" data-page-node-id="0dj740vsj3W8Pt1NgpNHhR"><div class="thumb" data-page-node-id="3QAvKv1N9bmIMrCJ3uJzmK"><img src="../assets/examples/04-点状化.png" alt="点状化" data-page-node-id="KgEwOp8iQeVBSymntHkfXr"></div>
+      <div class="meta" data-page-node-id="X9O7ZsB345Hcpr4Zc8xkiI"><div class="no" data-page-node-id="10QDwV7GkmtL3VEB5bmx2I">04</div><div class="cn" data-page-node-id="7fgccHjv9taC6ERNW9GeTz">点状化</div><div class="en" data-page-node-id="fOv1g0B9d90GGQEEvuB4dG">pointillize</div>
+        <div class="desc" data-page-node-id="FxxW1DvEv8Lz1kqWJ1edPT">在采样格点放置分散圆点，点大小随亮度变化。</div></div></div>
+
+    <div class="card" data-page-node-id="fR8QcVuLk3Xg4KKFxLtcwJ"><div class="thumb" data-page-node-id="8ZGey4muualxRCTwlGRJ4n"><img src="../assets/examples/05-晶格化.png" alt="晶格化" data-page-node-id="8K9nUu6mLOEnCYQmrvhwKO"></div>
+      <div class="meta" data-page-node-id="AuXgTKUa9tNUDnESAU2PCX"><div class="no" data-page-node-id="753YJz9V0OJHDEl68MRCeG">05</div><div class="cn" data-page-node-id="CTbSI6xgDIL9FvmOHQcEkF">晶格化</div><div class="en" data-page-node-id="OP4f4so2uKzD161rF0eu81">crystallize</div>
+        <div class="desc" data-page-node-id="q68pcMnjCYBBVCFNZaveY2">随机多边形碎片，每片取块内代表色，形成晶体碎裂感。</div></div></div>
+
+    <div class="card" data-page-node-id="sgdjNdSHh5gGx5BeZQ9FgK"><div class="thumb" data-page-node-id="uWgcPeoB2OFm8g4AZ48Ogj"><img src="../assets/examples/06-马赛克.png" alt="马赛克" data-page-node-id="vVPayrPlEESHfchF0tQep5"></div>
+      <div class="meta" data-page-node-id="nP3po3rY5WnDyWuyH4Z53i"><div class="no" data-page-node-id="ohBg9IIfcVtHnzy15M77R9">06</div><div class="cn" data-page-node-id="kk5cvCVSlGsNiVtDMNxoGR">马赛克</div><div class="en" data-page-node-id="B4YXVLcguYX4Apr0OFEaXU">mosaic</div>
+        <div class="desc" data-page-node-id="XPUnbNRD1y9ZhZ41ViLPZx">方形色块 + 缝隙（grout），缝隙仅画在主体内部。</div></div></div>
+
+    <div class="card" data-page-node-id="Zf5R2UO1Xdinx2PttBiB01"><div class="thumb" data-page-node-id="s9mIGQcLzc09q39dgKLqKl"><img src="../assets/examples/07-染色玻璃.png" alt="染色玻璃" data-page-node-id="EXpU8oTSTHx5KCGgJj2ovn"></div>
+      <div class="meta" data-page-node-id="NPu5bUDmhIktAZ6PuXR721"><div class="no" data-page-node-id="lc3gyhAVkz8To3cTtmbkRm">07</div><div class="cn" data-page-node-id="TuHl57SN9C4cZ8yWYyKDqi">染色玻璃</div><div class="en" data-page-node-id="hem4dYSgBcI8t4A1JHhPFR">glass2 (stained glass)</div>
+        <div class="desc" data-page-node-id="Y5X0XmTLgcTRZW1zEo3aOa">不规则碎玻璃块 + 铅条拼合，模拟彩绘玻璃窗。</div></div></div>
+
+    <div class="card" data-page-node-id="5e2opEhvnQBIvLxsvUDFal"><div class="thumb" data-page-node-id="28GRd73rZbsVomOZGk1Kxl"><img src="../assets/examples/08-拼缀图.png" alt="拼缀图" data-page-node-id="ZMOtDckvqet3VhLXZR5yyk"></div>
+      <div class="meta" data-page-node-id="KWRzFQk2pgyhY3dokcRBB2"><div class="no" data-page-node-id="n2eELohd0w7mGwWHXH9iOK">08</div><div class="cn" data-page-node-id="9MscxGisCqAIo9wzskXnFl">拼缀图</div><div class="en" data-page-node-id="zbUTQ62WwasY1QaFyYRA9R">patchwork</div>
+        <div class="desc" data-page-node-id="rvQyj1AvCmRXVp5aQQK3XM">规则网格拼布，每格取代表色，像布艺拼贴。</div></div></div>
+
+    <div class="card" data-page-node-id="1vTg1CR7f3MsHkX0U42FVm"><div class="thumb" data-page-node-id="dVy6EKqW1IDW0tbsuFsj4Y"><img src="../assets/examples/09-绘图笔.png" alt="绘图笔" data-page-node-id="kB5xjnN6EVVbVujYXfqYpv"></div>
+      <div class="meta" data-page-node-id="DKcIMww4fHpUtUpiSjHHkI"><div class="no" data-page-node-id="M2LH5xEHisa4Ezytx4IiAK">09</div><div class="cn" data-page-node-id="VF5mVkNVBpkUIoF6U4cNCo">绘图笔</div><div class="en" data-page-node-id="F3xnxqHQekCiUCaIMz7qSs">pen</div>
+        <div class="desc" data-page-node-id="V3vuvaVdqc9SWvBqretGJv">斜向排线素描，暗处线密、亮处留白，保留透明底。</div></div></div>
+
+    <div class="card" data-page-node-id="eEwCun5paMloiMz3K18mRd"><div class="thumb" data-page-node-id="2WDexCxmHdKOWnozHRC80p"><img src="../assets/examples/10-图章.png" alt="图章" data-page-node-id="kYj3csgnZ6gJoBXWYbWgkH"></div>
+      <div class="meta" data-page-node-id="vC0b1nBOJs8904wHhAugvG"><div class="no" data-page-node-id="13qZpFwC9hPxsp14nZIXpp">10</div><div class="cn" data-page-node-id="zhM6DUqeoHd1QYl3EQzJhr">图章</div><div class="en" data-page-node-id="kxaDQVFebXb2lZSp5ruxJy">stamp</div>
+        <div class="desc" data-page-node-id="Sae9H8yxt4giDp7T6oJLI7">高对比黑白剪影 + 噪点毛边，轮廓自动描线保形。</div></div></div>
+
+    <div class="card" data-page-node-id="NpWz8kAPQSpfqzZLT1G2zg"><div class="thumb" data-page-node-id="gsU86jyGXb7NakYcMSS1oU"><img src="../assets/examples/11-半调图案直线.png" alt="半调图案直线" data-page-node-id="UwW9BD2W8zsU6DVALHcMed"></div>
+      <div class="meta" data-page-node-id="Mlx8i8vpmPpol7O3XqELbd"><div class="no" data-page-node-id="KIkGnSIZDmEAy4JccXpEkZ">11</div><div class="cn" data-page-node-id="f1CfIrLcpLvvCt8moYZ4PD">半调图案（直线）</div><div class="en" data-page-node-id="oVH0rUQOUTAGoH7PPyHLb1">lines</div>
+        <div class="desc" data-page-node-id="hOUHIyKmLFv0iciRNo8BWM">单向排线，线宽随明暗变化，形成线纹半调。</div></div></div>
+
+    <div class="card" data-page-node-id="ud1LsLfuHfvhqEPj8ejGVe"><div class="thumb" data-page-node-id="yw7iGNNFKOSYvEwMBUwz0O"><img src="../assets/examples/12-径向模糊.png" alt="径向模糊" data-page-node-id="KpplfEHxrDemWCMvcGZxUQ"></div>
+      <div class="meta" data-page-node-id="0Z3VOGiGFBghJycsQTG65U"><div class="no" data-page-node-id="YzReC4pEHH6ZlcpUnUlvC7">12</div><div class="cn" data-page-node-id="AeqcdfkJy0w3TQ3aDpk1v9">径向模糊</div><div class="en" data-page-node-id="RGPtXL8vlFJp36ya5YF1F9">radial</div>
+        <div class="desc" data-page-node-id="eC9LZVzC4ZtGTWfEHH0AQD">以画面中心为焦点缩放叠加，形成放射状变焦拖尾。</div></div></div>
+
+    <div class="card" data-page-node-id="ER59gFfZseqoh24m4TtBzo"><div class="thumb" data-page-node-id="8h0lP7b7toj8L8MvaNJarq"><img src="../assets/examples/13-图像描摹.png" alt="图像描摹" data-page-node-id="rNHYEnPqb1wsnnpCURPIs8"></div>
+      <div class="meta" data-page-node-id="IsdXwLwnQmOx5EeMo8Fidv"><div class="no" data-page-node-id="kQc3neoeBhotRIGZqtk8Wr">13</div><div class="cn" data-page-node-id="2HAVjjhtGrzu38Eo54doGt">图像描摹</div><div class="en" data-page-node-id="4ZRZejJmFpl7TAPn4el8gt">trace</div>
+        <div class="desc" data-page-node-id="MSIXCAEenFwuXJZph5ZbaE">有限色板平化（默认 6 色），类似 AI「图像描摹」矢量感。</div></div></div>
+
+    <div class="card" data-page-node-id="pxV78NRhcqkt1yVEUWFRs3"><div class="thumb" data-page-node-id="3hQTOIkZmLxgvarAPMe6ll"><img src="../assets/examples/14-高斯模糊颗粒.png" alt="高斯模糊颗粒" data-page-node-id="YEzMIEMOfrwrOicnsHScTb"></div>
+      <div class="meta" data-page-node-id="YGr7NWsRZLMMjeoHUMEfBI"><div class="no" data-page-node-id="WtglCxVp6g2TJltZDHidew">14</div><div class="cn" data-page-node-id="KChUHIbNCvpYxAu5eiAs6E">高斯模糊 + 颗粒</div><div class="en" data-page-node-id="UHmBklIyt9JZ94WicFbrww">blurgrain</div>
+        <div class="desc" data-page-node-id="P6VhSmGtrJUmbZtc2tBB6V">柔焦模糊叠加胶片颗粒噪点，质感柔和。</div></div></div>
+
+    <div class="card" data-page-node-id="D6ROUCsKDAMx5F3Y2qbsi6"><div class="thumb" data-page-node-id="ZLzWoOvEQ9E7o0wvgR56z9"><img src="../assets/examples/15-玻璃.png" alt="玻璃" data-page-node-id="lGZZMtBS45gYnwA5hFtbvL"></div>
+      <div class="meta" data-page-node-id="LbyZ1DwrrSbHIsPa7LTGLh"><div class="no" data-page-node-id="7DqevD6JDxGSR7VzfFKgrh">15</div><div class="cn" data-page-node-id="9C0e4R9akdtC7A7fTlDKK6">玻璃</div><div class="en" data-page-node-id="ZL1BFYZTCPJ0WGAF5p0QxJ">glass</div>
+        <div class="desc" data-page-node-id="cT6NeNuZHZiqyXds3CpHWu">波纹位移折射，表面扭曲带高光，模拟透过磨砂玻璃。</div></div></div>
+  </section>
+
+  <footer data-page-node-id="ffNPiN5Pbscot2SwwUbc6o">
+    <p data-page-node-id="h7VBz15bdze7z0nIKZ4MTb"><strong data-page-node-id="6jRcOF8VloWPDYFHk36hYk">使用方法：</strong>把透明底主体图发给我，配一句「帮我把这个图片变成 <code data-page-node-id="lQDNhLffwHZDYhdvyAM6kQ">XX</code> 的」，即按对应效果默认参数出图。</p>
+    <p data-page-node-id="zoPaFI994zVxLiS8vf2Nfr"><strong data-page-node-id="SS96idIoOcdt36G6S2CKkO">可调参数示例：</strong><code data-page-node-id="tzxs7mM05iCqwoCHnCm3oo">cell</code>（网点/块大小）、<code data-page-node-id="av8Ft0MzevQVsTAfnaHMDK">strength</code>（模糊强度）、<code data-page-node-id="Tx7K4KLxHoDbhAd8PAI41f">threshold</code>（图章阈值）、<code data-page-node-id="w4v8Lqc4uzbsxF9D7kdCRH">bg=white</code>（换白底）等，需要时随图说明即可。</p>
+    <p data-page-node-id="ijI2zVgy0wpyvjdFahczDY">Skill 位置：<code data-page-node-id="jPQ5yPNPjUFBvEzw1YGA1d">~/.workbuddy/skills/djf-image-effects/</code></p>
+  </footer>
+</div>
+</body>
+</html>

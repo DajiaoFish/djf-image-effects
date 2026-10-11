@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DJF-Image effects · Effect Manual</title>
+<style>
+  :root{
+    --ink:#1f2430; --sub:#5b6472; --line:#e4e7ec; --accent:#ff5a3c;
+    --card:#fff; --bg:#f6f7f9;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.6;}
+  .wrap{max-width:1080px;margin:0 auto;padding:40px 24px 80px;}
+  header{border-bottom:3px solid var(--accent);padding-bottom:20px;margin-bottom:8px;}
+  header h1{margin:0;font-size:30px;letter-spacing:.5px;}
+  header .tag{display:inline-block;background:var(--accent);color:#fff;font-size:13px;
+    padding:3px 10px;border-radius:20px;margin-top:10px;}
+  header p{color:var(--sub);margin:10px 0 0;font-size:14px;}
+  .orig{margin:28px 0 10px;}
+  .orig h2{font-size:18px;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+  .orig h2::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent);}
+  .orig figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:12px;
+    padding:16px;display:flex;justify-content:center;}
+  .orig img{max-width:340px;width:100%;height:auto;display:block;
+    image-rendering:auto;background:
+      linear-gradient(45deg,#eee 25%,transparent 25%,transparent 75%,#eee 75%),
+      linear-gradient(45deg,#eee 25%,#fff 25%,#fff 75%,#eee 75%);
+    background-size:18px 18px;background-position:0 0,9px 9px;}
+  .orig figcaption{color:var(--sub);font-size:13px;margin-top:10px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:22px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+    display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s;}
+  .card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.08);}
+  .card .thumb{background:#fff;padding:10px;display:flex;justify-content:center;
+    border-bottom:1px solid var(--line);min-height:200px;align-items:center;}
+  .card .thumb img{width:100%;max-height:200px;object-fit:contain;
+    background:
+      linear-gradient(45deg,#eee 25%,transparent 25%,transparent 75%,#eee 75%),
+      linear-gradient(45deg,#eee 25%,#fff 25%,#fff 75%,#eee 75%);
+    background-size:18px 18px;background-position:0 0,9px 9px;}
+  .card .meta{padding:12px 14px 14px;}
+  .card .no{font-size:12px;color:var(--accent);font-weight:700;letter-spacing:1px;}
+  .card .en{font-size:17px;font-weight:700;margin:2px 0 2px;}
+  .card .cn{font-size:12px;color:var(--sub);font-family:ui-monospace,Menlo,Consolas,monospace;}
+  .card .desc{font-size:12.5px;color:#444;margin-top:8px;}
+  footer{margin-top:40px;border-top:1px solid var(--line);padding-top:18px;
+    color:var(--sub);font-size:13px;}
+  footer code{background:#eceff3;padding:2px 6px;border-radius:5px;font-size:12px;}
+  @media print{.card:hover{transform:none;box-shadow:none;}.wrap{padding:12px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>DJF-Image effects · Effect Manual</h1>
+    <span class="tag">Transparent subject → 15 Illustrator-style effects</span>
+    <p>Pure-code output (Pillow + NumPy) — no AI image generation, no watermark, fully reproducible. All effects keep the transparent background by default, ready to drop into collages.</p>
+  </header>
+
+  <section class="orig">
+    <h2>Source image (subject sample)</h2>
+    <figure>
+      <img src="../assets/examples/00-原图.png" alt="source image">
+    </figure>
+    <figcaption>Sample subject: a transparent-background PNG (an orange cat on the phone). The 15 effects below are all generated from this image.</figcaption>
+  </section>
+
+  <section class="grid">
+    <div class="card"><div class="thumb"><img src="../assets/examples/01-彩色半调.png" alt="Color Halftone"></div>
+      <div class="meta"><div class="no">01</div><div class="en">Color Halftone</div><div class="cn">halftone</div>
+        <div class="desc">RGB tri-color dots overlaid at traditional screen angles; the eye re-mixes them into the original color, with alpha preserved.</div></div></div>
+
+    <div class="card"><div class="thumb"><img src="../assets/examples/02-栅格化.png" alt="Rasterize"></div>
+      <div class="meta"><div class="no">02</div><div class="en">Rasterize</div><div class="cn">raster</div>
+        <div class="desc">Aligned grid plus single-color ink dots; the whole image is resampled onto a regular grid.</div></div></div>
+
+    <div class="card"><div class="thumb"><img src="../assets/examples/03-铜版雕刻.png" alt="Mezzotint"></div>
+      <div class="meta"><div class="no">03</div><div class="en">Mezzotint</div><div class="cn">mezzotint</div>
+        <div class="desc">Randomly directed engraving strokes give a metal-plate engraving texture; light and shadow are conveyed by stroke density.</div></div></div>
+
+    <div class="card"><div class="thumb"><img src="../assets/examples/04-点状化.png" alt="Pointillize"></div>
+      <div class="meta"><div class="no">04</div><div class="en">Pointillize</div><div class="cn">pointillize</div>
+        <div class="desc">Scattered dots placed on a sampling grid; dot size varies with brightness.</div></div></div>
+
+    <div class="card"><div class="thumb"><img src="../assets/examples/05-晶格化.png" alt="Crystallize"></div>
+      <div class="meta"><div class="no">05</div><div class="en">Crystallize</div><div class="cn">crystallize</div>
+        <div class="desc">Random polygon shards; each shard takes a representative color, giving a cracked-crystal look.</div></div></div>
+
+    <div class="card"><div class="thumb"><img src="../assets/examples/06-马赛克.png" alt="Mosaic"></div>
+      <div class="meta"><div class="no">06</div><div class="en">Mosaic</div><div class="cn">mosaic</div>
+        <div class="desc">Square tiles plus grout seams; grout is drawn only inside the subject.</div></div></div>
+
+    <div class="card"><div class="thumb"><img src="../assets/examples/07-染色玻璃.png" alt="Stained Glass"></div>
+      <div class="meta"><div class="no">07</div><div class="en">Stained Glass</div><div class="cn">glass2</div>
+        <div class="desc">Irregular glass shards joined by lead came, mimicking a stained-glass window.</div></div></div>
+
+    <div class="card"><div class="thumb"><img src="../assets/examples/08-拼缀图.png" alt="Patchwork"></div>
+      <div class="meta"><div class="no">08</div><div class="en">Patchwork</div><div class="cn">patchwork</div>
+        <div class="desc">Regular grid of fabric patches; each cell takes a representative color, like a fabric collage.</div></div></div>
+
+    <div class="card"><div class="thumb"><img src="../assets/examples/09-绘图笔.png" alt="Graphic Pen"></div>
+      <div class="meta"><div class="no">09</div><div class="en">Graphic Pen</div><div class="cn">pen</div>
+        <div class="desc">Diagonal cross-hatching sketch; dense ink in shadows, white space in highlights, alpha preserved.</div></div></div>
+
+    <div class="card"><div class="thumb"><img src="../assets/examples/10-图章.png" alt="Stamp"></div>
+      <div class="meta"><div class="no">10</div><div class="en">Stamp</div><div class="cn">stamp</div>
+        <div class="desc">High-contrast B&W silhouette plus noisy rough edge; outline auto-traced to keep the shape readable.</div></div></div>
+
+    <div class="card"><div class="thumb"><img src="../assets/examples/11-半调图案直线.png" alt="Halftone Lines"></div>
+      <div class="meta"><div class="no">11</div><div class="en">Halftone Lines</div><div class="cn">lines</div>
+        <div class="desc">One-directional hatching whose line width tracks luminance, forming a line-halftone.</div></div></div>
+
+    <div class="card"><div class="thumb"><img src="../assets/examples/12-径向模糊.png" alt="Radial Blur"></div>
+      <div class="meta"><div class="no">12</div><div class="en">Radial Blur</div><div class="cn">radial</div>
+        <div class="desc">Zoom-blur by scaling and overlaying around the center, producing radial motion streaks.</div></div></div>
+
+    <div class="card"><div class="thumb"><img src="../assets/examples/13-图像描摹.png" alt="Image Trace"></div>
+      <div class="meta"><div class="no">13</div><div class="en">Image Trace</div><div class="cn">trace</div>
+        <div class="desc">Flatten to a limited palette (default 6 colors), like Illustrator's "Image Trace" vector feel.</div></div></div>
+
+    <div class="card"><div class="thumb"><img src="../assets/examples/14-高斯模糊颗粒.png" alt="Gaussian Blur + Grain"></div>
+      <div class="meta"><div class="no">14</div><div class="en">Gaussian Blur + Grain</div><div class="cn">blurgrain</div>
+        <div class="desc">Soft-focus blur with film-grain noise overlaid for a gentle texture.</div></div></div>
+
+    <div class="card"><div class="thumb"><img src="../assets/examples/15-玻璃.png" alt="Glass"></div>
+      <div class="meta"><div class="no">15</div><div class="en">Glass</div><div class="cn">glass</div>
+        <div class="desc">Ripple displacement refraction; the surface warps with highlights, like looking through frosted glass.</div></div></div>
+  </section>
+
+  <footer>
+    <p><strong>How to use:</strong> Send me a transparent-background subject image with a line like "turn this image into <code>XX</code>", and I'll output it using that effect's default parameters.</p>
+    <p><strong>Tunable parameters:</strong> <code>cell</code> (dot / block size), <code>strength</code> (blur intensity), <code>threshold</code> (stamp threshold), <code>bg=white</code> (switch to white background), etc. — just specify per image when needed.</p>
+    <p>Skill location: <code>~/.workbuddy/skills/djf-image-effects/</code></p>
+  </footer>
+</div>
+</body>
+</html>
