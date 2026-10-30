@@ -20,7 +20,7 @@ description: DJF-Image effects · 主体图特效变换技能。用户发来一�
 ## 使用流程
 
 1. **取输入**：主体图（透明底最佳）+ 效果名。效果名中英文、别名都能直接用（走 `ALIASES` 表）。
-2. **非透明底**：先告知用户并询问是否抠图（可调用 buddy-image-processing 的抠图能力）；halftone / radial / trace 等对非透明底也能直接跑。
+2. **非透明底**：先告知用户并询问是否抠图（建议先抠成透明底 PNG）；halftone / radial / trace 等对非透明底也能直接跑。
 3. **执行**（先 `pip install pillow numpy`）：
 
    ```bash

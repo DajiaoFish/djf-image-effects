@@ -26,8 +26,7 @@ straight into collages and sticker sheets.
   backgrounds — great for collages / stickers.
 - **Composable**: chain effects with `--pipeline`.
 - **Cross-platform**: standard Python script, works on Windows / macOS / Linux.
-- **Dual mode**: run it straight from the CLI, or use it as a
-  [WorkBuddy](https://www.workbuddy.cn) Skill (see below).
+- **Dual mode**: run it straight from the CLI, or use it as an Agent Skill (see below).
 
 ---
 
@@ -144,13 +143,13 @@ effects + one overview sheet). An English effect manual is at
 > Extra effects `gaussian` / `mono` / `pixelate` are also available — see
 > `python scripts/apply_effects.py --list`.
 
-## 🤖 Using it as a WorkBuddy Skill (optional)
+## 🤖 Using it as an Agent Skill (optional)
 
-This repo is itself a valid WorkBuddy Skill. If you use WorkBuddy, drop the
-whole repo at:
+The repo ships a standard `SKILL.md`. Drop the whole repo into your tool's
+skills directory:
 
 ```
-~/.workbuddy/skills/djf-image-effects/
+~/.claude/skills/djf-image-effects/     # Claude Code as an example
 ```
 
 Then in a chat just say "turn this image into a crystallize effect" and the
@@ -160,12 +159,12 @@ Skill calls the script for you. Full details in [`SKILL.md`](SKILL.md).
 
 ## 🌐 Use with any AI assistant (Doubao / Codex / Claude)
 
-The effect engine is a **pure-Python script** with no WorkBuddy dependency. Any AI
+The effect engine is a **pure-Python script** with no platform dependency. Any AI
 that can run commands/code (Codex, Claude Code, Doubao's code mode, etc.) can call
 it once it has the repo. The repo root already ships with multi-platform
 instruction files that each tool auto-reads:
 
-- `SKILL.md` — WorkBuddy only (natural-language auto-trigger)
+- `SKILL.md` — Agent Skills manifest (natural-language auto-trigger)
 - `AGENTS.md` — universal agent instructions (Codex / Cursor / Gemini CLI and other
   agents.md-compliant tools auto-read it)
 - `CLAUDE.md` — Claude Code only (auto-read)
@@ -187,7 +186,7 @@ djf-image-effects/
 ├── README_EN.md                    English docs (this file)
 ├── LICENSE                        MIT
 ├── requirements.txt               pillow, numpy
-├── SKILL.md                       WorkBuddy Skill manifest (optional)
+├── SKILL.md                       Agent Skill manifest (optional)
 ├── scripts/
 │   └── apply_effects.py           all effects (the only script)
 ├── assets/examples/               sample images (source + 15 effects + overview)

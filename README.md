@@ -20,7 +20,7 @@
 - **透明底友好**：默认保留 alpha，背景干净，适合拼贴/贴纸。
 - **效果可叠加**：用 `--pipeline` 把多个效果串成流水线。
 - **跨平台**：标准 Python 脚本，Windows / macOS / Linux 均可运行。
-- **双模式**：既能在命令行直接跑，也能作为 [WorkBuddy](https://www.workbuddy.cn) 的 Skill 使用（见下文）。
+- **双模式**：既能在命令行直接跑，也能作为 Agent Skill 使用（支持 `SKILL.md` 的工具可直接读取，见下文）。
 
 ---
 
@@ -125,12 +125,12 @@ python scripts/apply_effects.py --list
 
 > 另含附加效果 `gaussian` / `mono` / `pixelate`，详见 `python scripts/apply_effects.py --list`。
 
-## 🤖 作为 WorkBuddy Skill 使用（可选）
+## 🤖 作为 Agent Skill 使用（可选）
 
-本仓库本身就是一个合法的 WorkBuddy Skill。如果你用 WorkBuddy，把整个仓库放到：
+仓库根目录的 `SKILL.md` 符合通用 Agent Skills 规范。把整个仓库放进所用工具的技能目录：
 
 ```
-~/.workbuddy/skills/djf-image-effects/
+~/.claude/skills/djf-image-effects/     # 以 Claude Code 为例，其它工具放各自的 skills 目录
 ```
 
 即可在对话里直接说「帮我把这个图片变成晶格化的」，Skill 会自动调用脚本出图。
@@ -140,9 +140,9 @@ python scripts/apply_effects.py --list
 
 ## 🌐 让任意 AI 助手使用（豆包 / Codex / Claude 等）
 
-本仓库的特效引擎是**纯 Python 脚本**，不依赖 WorkBuddy。任何能跑命令/代码的 AI（Codex、Claude Code、豆包代码模式等）拿到仓库后都能调用。仓库根目录已附带多平台「说明书」，会被各家工具自动读取：
+本仓库的特效引擎是**纯 Python 脚本**，不依赖任何特定平台。任何能跑命令/代码的 AI（Codex、Claude Code、豆包代码模式等）拿到仓库后都能调用。仓库根目录已附带多平台「说明书」，会被各家工具自动读取：
 
-- `SKILL.md` —— WorkBuddy 专用（自然语言自动触发）
+- `SKILL.md` —— Agent Skills 清单（自然语言自动触发）
 - `AGENTS.md` —— 通用 Agent 指令（Codex / Cursor / Gemini CLI 等遵循 agents.md 规范的工具自动读取）
 - `CLAUDE.md` —— Claude Code 专用（自动读取）
 
@@ -161,7 +161,7 @@ djf-image-effects/
 ├── README.md                      本文件
 ├── LICENSE                        MIT
 ├── requirements.txt               pillow, numpy
-├── SKILL.md                       WorkBuddy Skill 清单（可选）
+├── SKILL.md                       Agent Skill 清单（可选）
 ├── scripts/
 │   └── apply_effects.py           全部效果实现（唯一脚本）
 ├── assets/examples/               示例图（原图 + 15 效果 + 总览）
